@@ -1,0 +1,31 @@
+/* Global */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* Main Content */
+body {
+    padding-top: 50px;
+    margin-bottom: 70px;
+}
+
+/* Footer */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color:  #f5f5f5;
+    font-size: 90%;
+    padding-top: 10px;
+    text-align: center;
+}
+
+/* Forms */
+form label.error {
+    color: red;
+}
+
+form input.error {
+    border-color: red;
+}

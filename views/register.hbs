@@ -1,0 +1,33 @@
+<form id="register-form" class="form-horizontal" action="/register" method="POST">
+    <input name="_csrf" type="hidden" value="{{csrfToken}}">
+
+    <div class="form-group">
+        <label for="username" class="col-md-4 col-sm-3 control-label">Username</label>
+        <div class="col-md-4 col-sm-6">
+            <input id="username" name="username" class="form-control {{#if errors.username}}error{{/if}}" type="text" placeholder="Enter your username" value="{{username}}">
+            {{#if errors.username}}<label id="username-error" class="error" for="username">{{errors.username.msg}}</label>{{/if}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email" class="col-md-4 col-sm-3 control-label">Email</label>
+        <div class="col-md-4 col-sm-6">
+            <input id="email" name="email" class="form-control {{#if errors.email}}error{{/if}}" type="text" placeholder="Enter your email" value="{{email}}">
+            {{#if errors.email}}<label id="email-error" class="error" for="email">{{errors.email.msg}}</label>{{/if}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password" class="col-md-4 col-sm-3 control-label">Password</label>
+        <div class="col-md-4 col-sm-6">
+            <input id="password" name="password" class="form-control {{#if errors.password}}error{{/if}}" type="password" placeholder="Enter your password">
+            {{#if errors.password}}<label id="password-error" class="error" for="password">{{errors.password.msg}}</label>{{/if}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6">
+            <button type="submit" class="btn btn-success submit">Register</button>
+        </div>
+    </div>
+</form>
