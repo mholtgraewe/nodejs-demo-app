@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon app.js"
   },
-  "keywords": [express, mongodb, mongoose, authentication, demo],
+  "keywords": ["express", "mongodb", "mongoose", "authentication", "demo"],
   "author": "Marcus Holtgräwe",
   "license": "ISC",
   "dependencies": {
