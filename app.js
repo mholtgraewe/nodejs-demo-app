@@ -31,7 +31,6 @@ mongoose.connect(config.db.uri, function (err) {
     app.set('views', config.views.path);
     app.set('view engine', config.views.engine);
 
-    // setup routes
     middleware(app);
     routes(app);
 
