@@ -26,6 +26,10 @@ module.exports = {
     },
 
     logger: {
+        exceptions: {
+            filename: path.join(__dirname, 'log', 'exceptions.log')
+        },
+
         console: {
             timestamp: true,
             level: 'info',
@@ -42,10 +46,6 @@ module.exports = {
             level: 'info'
         },
 
-        exceptions: {
-            filename: path.join(__dirname, 'log', 'exceptions.log')
-        },
-
         access: {
             filename: path.join(__dirname, 'log', 'access-%DATE%.log'),
             date_format: 'YYYY-MM-DD',
@@ -54,7 +54,25 @@ module.exports = {
         }
     },
 
-    publicPath: path.join(__dirname, 'public'),
+    middleware: {
+        static: path.join(__dirname, 'public'),
+
+        bodyParser: {
+            urlEncoded: {
+                extended: false
+            }
+        },
+
+        session: {
+            resave: false,
+            saveUninitialized: false,
+            secret: 'QruRCickR6sB',
+            cookie: {
+                httpOnly: true,
+                secure: true
+            }
+        }
+    },
 
     views: {
         path: path.join(__dirname, 'views'),

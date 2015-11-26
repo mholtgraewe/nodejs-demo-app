@@ -19,10 +19,23 @@ module.exports = function (app) {
     app.use(morgan('combined', { stream: accessLogStream }));
 
     // set path to the public directory (styles, scripts, images etc.)
-    app.use(express.static(config.publicPath));
+    app.use(express.static(config.middleware.static));
 
     // enable POST param parsing
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded(config.middleware.bodyParser.urlEncoded));
+
+    // enable session management
+    app.use(session(config.middleware.session));
+
+    // enable Cross-Site-Request-Forgery protection
+    app.use(csrf());
+
+    // expose config and session to views
+    app.use(function (req, res, next) {
+        res.locals.config = config;
+        res.locals.session = req.session;
+        next();
+    });
 
     // validator for request params
     app.use(expressValidator({
@@ -35,25 +48,4 @@ module.exports = function (app) {
             }
         }
     }));
-
-    // enable session management
-    app.use(session({
-        resave: false,
-        saveUninitialized: false,
-        secret: 'QruRCickR6sB',
-        cookie: {
-            httpOnly: true,
-            secure: true
-        }
-    }));
-
-    // enable Cross-Site-Request-Forgery protection
-    app.use(csrf());
-
-    // expose config and session to views
-    app.use(function (req, res, next) {
-        res.locals.config = config;
-        res.locals.session = req.session;
-        next();
-    });
 };
