@@ -37,7 +37,7 @@ mongoose.connect(config.db.uri, function (err) {
     http.createServer(app)
         .listen(config.server.http.port, function (err) {
             if (err) throw err;
-            logger.info('HTTP server now listening on port %d...', config.server.http.port);
+            logger.info('HTTP server now listening on port %d', config.server.http.port);
         });
 
     https.createServer({
@@ -45,6 +45,6 @@ mongoose.connect(config.db.uri, function (err) {
         cert: fs.readFileSync(config.server.https.cert)
     }, app).listen(config.server.https.port, function (err) {
         if (err) throw err;
-        logger.info('HTTPS server now listening on port %d...', config.server.https.port);
+        logger.info('HTTPS server now listening on port %d', config.server.https.port);
     });
 });
