@@ -27,6 +27,11 @@ mongoose.connect(config.db.uri, function (err) {
 
     let app = express();
 
+    // expose application wide properties (name, version etc.) to views
+    app.locals.app = {
+        name: config.app.name
+    };
+
     // view engine setup
     app.set('views', config.views.path);
     app.set('view engine', config.views.engine);

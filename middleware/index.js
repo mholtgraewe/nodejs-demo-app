@@ -30,9 +30,8 @@ module.exports = function (app) {
     // enable Cross-Site-Request-Forgery protection
     app.use(csrf());
 
-    // expose config and session to views
+    // expose session to views
     app.use(function (req, res, next) {
-        res.locals.config = config;
         res.locals.session = req.session;
         next();
     });
