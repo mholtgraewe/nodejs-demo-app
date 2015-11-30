@@ -48,7 +48,6 @@ module.exports = function (app) {
         }
     }));
 
-
     // allow to run page tests during development by including 'test=1'
     // in the query string (i.e. http://localhost/about?test=1)
     if (app.get('env') === 'development') {
