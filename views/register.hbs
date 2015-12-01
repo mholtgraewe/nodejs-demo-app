@@ -12,7 +12,7 @@
     <div class="form-group">
         <label for="email" class="col-md-4 col-sm-3 control-label">Email</label>
         <div class="col-md-4 col-sm-6">
-            <input id="email" name="email" class="form-control {{#if errors.email}}error{{/if}}" type="text" placeholder="Enter your email" value="{{email}}">
+            <input id="email" name="email" class="form-control {{#if errors.email}}error{{/if}}" type="email" placeholder="Enter your email" value="{{email}}">
             {{#if errors.email}}<label id="email-error" class="error" for="email">{{errors.email.msg}}</label>{{/if}}
         </div>
     </div>

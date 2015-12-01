@@ -52,7 +52,18 @@ module.exports = function (app) {
     // in the query string (i.e. http://localhost/about?test=1)
     if (app.get('env') === 'development') {
         app.use(function (req, res, next) {
-            res.locals.showPageTests = (req.query.test === '1');
+            if (req.query.test === '1') {
+                let sep   = '/',
+                    path  = req.path,
+                    start = path.startsWith(sep) ?  1 : 0,
+                    end   = path.endsWith(sep)   ? -1 : undefined;
+
+                // strip leading and trailing forward slashes from path if present,
+                // so it can be used in views as <script src="/test/{{pagetTest}}.js">
+                res.locals.pageTest = path.slice(start, end);
+
+                res.locals.showPageTests = true;
+            }
             next();
         });
     }

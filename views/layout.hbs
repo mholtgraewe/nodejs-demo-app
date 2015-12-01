@@ -82,6 +82,9 @@
             <script src="/vendor/chai/chai-jquery.js"></script>
             <script>mocha.setup('bdd');</script>
             <script src="/test/global.js"></script>
+            {{#if pageTest}}
+                <script src="/test/{{pageTest}}.js"></script>
+            {{/if}}
             <script>mocha.run();</script>
         {{/if}}
     </body>
