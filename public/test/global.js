@@ -13,15 +13,15 @@
         });
 
         it('should have a main navigation bar', function () {
-            $nav.should.exist;
+            $nav.should.exist.and.not.be.empty;
         });
 
         it('should have a main section', function () {
-            $main.should.exist;
+            $main.should.exist.and.not.be.empty;
         });
 
         it('should have a footer', function () {
-            $footer.should.exist;
+            $footer.should.exist.and.not.be.empty;
         });
 
         describe('Main navigation bar', function () {
@@ -49,7 +49,7 @@
 
         describe('Main section', function () {
             it('should have a page header', function () {
-                $('.page-header', $main).should.have.length(1);
+                $('.page-header', $main).should.exist.and.not.be.empty;
             });
         });
     });
