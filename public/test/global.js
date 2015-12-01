@@ -49,7 +49,7 @@
 
         describe('Main section', function () {
             it('should have a page header', function () {
-                $('.page-header', $main).length.should.equal(1);
+                $('.page-header', $main).should.have.length(1);
             });
         });
     });
