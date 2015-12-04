@@ -12,12 +12,19 @@ let config = require('./config'),
     middleware = require('./middleware'),
     routes = require('./routes');
 
-// log runtime exceptions to a file
+// always log runtime exceptions to file
 logger.handleExceptions(new logger.transports.File(config.logger.exceptions));
 
-// log all other messages to the console and to a separate file
+// disable logging to console by default
 logger.remove(logger.transports.Console);
-logger.add(logger.transports.Console, config.logger.console);
+
+// enable logging to console only if NOT in test mode
+// to avoid polluting of test reports with log messages
+if (process.env.NODE_ENV !== 'test') {
+    logger.add(logger.transports.Console, config.logger.console);
+}
+
+// enable logging to file
 logger.add(logger.transports.File, config.logger.file);
 
 mongoose.connect(config.db.uri, function (err) {
@@ -26,6 +33,9 @@ mongoose.connect(config.db.uri, function (err) {
     logger.info('Connected to database at %s', config.db.uri);
 
     let app = express();
+
+    // expose app to test scripts
+    module.exports = app;
 
     // expose application wide properties (name, version etc.) to views
     app.locals.app = {
@@ -39,17 +49,20 @@ mongoose.connect(config.db.uri, function (err) {
     middleware(app);
     routes(app);
 
-    http.createServer(app)
-        .listen(config.server.http.port, function (err) {
-            if (err) throw err;
-            logger.info('HTTP server now listening on port %d', config.server.http.port);
-        });
+    // only start server if script is executed as standalone
+    if (!module.parent) {
+        http.createServer(app)
+            .listen(config.server.http.port, function (err) {
+                if (err) throw err;
+                logger.info('HTTP server now listening on port %d', config.server.http.port);
+            });
 
-    https.createServer({
-        key: fs.readFileSync(config.server.https.key),
-        cert: fs.readFileSync(config.server.https.cert)
-    }, app).listen(config.server.https.port, function (err) {
-        if (err) throw err;
-        logger.info('HTTPS server now listening on port %d', config.server.https.port);
-    });
+        https.createServer({
+            key: fs.readFileSync(config.server.https.key),
+            cert: fs.readFileSync(config.server.https.cert)
+        }, app).listen(config.server.https.port, function (err) {
+            if (err) throw err;
+            logger.info('HTTPS server now listening on port %d', config.server.https.port);
+        });
+    }
 });
