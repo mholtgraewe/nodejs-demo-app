@@ -15,7 +15,7 @@ let config = require('./config'),
 // always log runtime exceptions to file
 logger.handleExceptions(new logger.transports.File(config.logger.exceptions));
 
-// disable logging to console by default
+// remove the default logger
 logger.remove(logger.transports.Console);
 
 // enable logging to console only if NOT in test mode
