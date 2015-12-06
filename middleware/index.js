@@ -1,6 +1,6 @@
 'use strict';
 
-let config = require('../config'),
+let config = require('../config/config'),
     path = require('path'),
     express = require('express'),
     morgan = require('morgan'),

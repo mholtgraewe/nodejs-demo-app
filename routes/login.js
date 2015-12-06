@@ -1,6 +1,6 @@
 'use strict';
 
-let config = require('../config'),
+let config = require('../config/config'),
     dbErrorCodes = config.db.errorCodes,
     mongoose = require('mongoose'),
     User = mongoose.model('User'),

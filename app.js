@@ -1,6 +1,6 @@
 'use strict';
 
-let config = require('./config'),
+let config = require('./config/config'),
     path = require('path'),
     http = require('http'),
     https = require('https'),

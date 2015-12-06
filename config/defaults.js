@@ -1,6 +1,7 @@
 'use strict';
 
-let path = require('path');
+let path = require('path'),
+    root = path.join(__dirname, '..');
 
 module.exports = {
     app: {
@@ -13,13 +14,13 @@ module.exports = {
         },
         https: {
             port: 443,
-            key: path.join(__dirname, 'certificate', 'key.pem'),
-            cert: path.join(__dirname, 'certificate', 'cert.pem')
+            key: path.join(root, 'certificate', 'key.pem'),
+            cert: path.join(root, 'certificate', 'cert.pem')
         }
     },
 
     db: {
-        uri: 'mongodb://localhost:27017/demo-app',
+        uri: 'mongodb://localhost:27017/nodejs-demo-app',
         errorCodes: {
             duplicateKey: 11000
         }
@@ -27,7 +28,7 @@ module.exports = {
 
     logger: {
         exceptions: {
-            filename: path.join(__dirname, 'log', 'exceptions.log')
+            filename: path.join(root, 'log', 'exceptions.log')
         },
 
         console: {
@@ -37,7 +38,7 @@ module.exports = {
         },
 
         file: {
-            filename: path.join(__dirname, 'log', 'application.log'),
+            filename: path.join(root, 'log', 'application.log'),
             maxsize: 5 * 1000 * 1000,
             maxFiles: 5,
             tailable: true,
@@ -47,7 +48,7 @@ module.exports = {
         },
 
         access: {
-            filename: path.join(__dirname, 'log', 'access-%DATE%.log'),
+            filename: path.join(root, 'log', 'access-%DATE%.log'),
             date_format: 'YYYY-MM-DD',
             frequency: 'daily',
             verbose: false,
@@ -55,7 +56,7 @@ module.exports = {
     },
 
     middleware: {
-        static: path.join(__dirname, 'public'),
+        static: path.join(root, 'public'),
 
         bodyParser: {
             urlEncoded: {
@@ -75,7 +76,7 @@ module.exports = {
     },
 
     views: {
-        path: path.join(__dirname, 'views'),
+        path: path.join(root, 'views'),
         engine: 'hbs'
     },
 
