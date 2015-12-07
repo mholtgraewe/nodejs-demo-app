@@ -57,12 +57,14 @@ mongoose.connect(config.db.uri, function (err) {
                 logger.info('HTTP server now listening on port %d', config.server.http.port);
             });
 
-        https.createServer({
-            key: fs.readFileSync(config.server.https.key),
-            cert: fs.readFileSync(config.server.https.cert)
-        }, app).listen(config.server.https.port, function (err) {
-            if (err) throw err;
-            logger.info('HTTPS server now listening on port %d', config.server.https.port);
-        });
+        if (config.server.https.isEnabled) {
+            https.createServer({
+                key: fs.readFileSync(config.server.https.key),
+                cert: fs.readFileSync(config.server.https.cert)
+            }, app).listen(config.server.https.port, function (err) {
+                if (err) throw err;
+                logger.info('HTTPS server now listening on port %d', config.server.https.port);
+            });
+        }
     }
 });

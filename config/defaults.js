@@ -15,7 +15,8 @@ module.exports = {
         https: {
             port: 443,
             key: path.join(root, 'certificate', 'key.pem'),
-            cert: path.join(root, 'certificate', 'cert.pem')
+            cert: path.join(root, 'certificate', 'cert.pem'),
+            isEnabled: true
         }
     },
 
