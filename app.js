@@ -27,15 +27,15 @@ if (process.env.NODE_ENV !== 'test') {
 // enable logging to file
 logger.add(logger.transports.File, config.logger.file);
 
+let app = express();
+
+// expose app to test scripts
+module.exports = app;
+
 mongoose.connect(config.db.uri, function (err) {
     if (err) throw err;
 
     logger.info('Connected to database at %s', config.db.uri);
-
-    let app = express();
-
-    // expose app to test scripts
-    module.exports = app;
 
     // expose application wide properties (name, version etc.) to views
     app.locals.app = {
