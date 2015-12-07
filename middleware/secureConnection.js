@@ -10,10 +10,10 @@ module.exports = (function () {
                 return res.redirect('https://' + req.headers.host + req.url);
             }
             next();
-        }
+        };
     } else {
         return function (req, res, next) {
             next();
-        }
+        };
     }
 })();
