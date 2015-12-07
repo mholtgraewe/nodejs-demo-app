@@ -5,6 +5,7 @@
   "description": "A simple Node.js web application",
   "main": "app.js",
   "scripts": {
+    "test": "mocha -u bdd -R spec --recursive",
     "start": "nodemon app.js"
   },
   "keywords": [
@@ -35,6 +36,7 @@
   "devDependencies": {
     "chai": "*",
     "mocha": "*",
-    "nodemon": "*"
+    "nodemon": "*",
+    "zombie": "^4.2.1"
   }
 }

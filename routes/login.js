@@ -82,10 +82,10 @@ module.exports = function (app) {
                 .isLength(0, 100).withMessage('Please enter no more than 100 characters.');
 
             req.sanitize('password').trim();
-            req.check('password', 'Please enter a password')
-                .notEmpty().withMessage('This field is required.')
-                .isLength(3, 12).withMessage('Please enter no more than 12 characters')
-                .isLength(3).withMessage('Please enter at least 3 characters.');
+            req.check('password')
+                .isLength(3).withMessage('Please enter at least 3 characters.')
+                .isLength(0, 12).withMessage('Please enter no more than 12 characters.')
+                .notEmpty().withMessage('This field is required.');
 
             return req.validationErrors(true);
         }
