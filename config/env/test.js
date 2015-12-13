@@ -21,4 +21,8 @@ module.exports = {
             }
         }
     },
+
+    bcrypt: {
+        cost: 1
+    }
 };

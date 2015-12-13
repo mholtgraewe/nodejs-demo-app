@@ -7,6 +7,9 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const config = require('../../config/config'),
       app = require('../../app'),
+      mongoose = require('mongoose'),
+      bcrypt = require('bcryptjs'),
+      User = mongoose.model('User'),
       http = require('http'),
       Browser = require('zombie'),
       expect = require('chai').expect;
@@ -110,8 +113,75 @@ describe('Registration page', function () {
             });
         });
 
-        it('should fail if username already exists');
-        it('should fail if email already exists');
-        it('should create and log in the new user and forward her to the dashboard');
+        it('should fail if username already exists', function (done) {
+            clearUsers(function (err) {
+                createUser('test_user', 'test_user@localhost.com', '12345',
+                    function (err) {
+                        browser.fill(username, 'test_user');
+                        browser.fill(email, 'some_email@localhost.com');
+                        browser.fill(password, '12345');
+
+                        browser.pressButton(submit, function (err) {
+                            expect(browser.text(usernameError)).to.equal('User already exists.');
+                            done();
+                        });
+                    }
+                );
+            });
+        });
+
+        it('should fail if email already exists', function (done) {
+            clearUsers(function (err) {
+                createUser('test_user', 'test_user@localhost.com', '12345',
+                    function (err) {
+                        browser.fill(username, 'some_user');
+                        browser.fill(email, 'test_user@localhost.com');
+                        browser.fill(password, '12345');
+
+                        browser.pressButton(submit, function (err) {
+                            expect(browser.text(emailError)).to.equal('Email already exists.');
+                            done();
+                        });
+                    }
+                );
+            });
+        });
+
+        it('should create and log in the new user and forward her to the dashboard', function (done) {
+            clearUsers(function (err) {
+                browser.fill(username, 'test_user');
+                browser.fill(email, 'test_email@localhost.com');
+                browser.fill(password, '12345');
+
+                browser.pressButton(submit, function (err) {
+                    expect(browser.text('.page-header h1')).to.equal('Dashboard');
+
+                    User.findById('test_user', function (err, user) {
+                        expect(user).to.exist;
+
+                        let passwordMatches = bcrypt.compareSync('12345', user.password);
+                        expect(passwordMatches).to.be.true;
+
+                        done();
+                    })
+                });
+           });
+        });
     });
+
+
+    // helper functions
+
+    function clearUsers(callback) {
+        User.remove({}, callback);
+    }
+
+    function createUser(username, email, password, callback) {
+        let user = new User({
+            _id: username,
+            email,
+            password: bcrypt.hashSync(password, config.bcrypt.cost)
+        });
+        user.save(callback);
+    }
 });
