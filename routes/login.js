@@ -77,8 +77,8 @@ module.exports = function (app) {
             req.sanitize('email').xss();
             req.sanitize('email').toLowerCase();
             req.check('email')
-                .notEmpty().withMessage('This field is required.')
                 .isEmail().withMessage('Please enter a valid email address.')
+                .notEmpty().withMessage('This field is required.')
                 .isLength(0, 100).withMessage('Please enter no more than 100 characters.');
 
             req.sanitize('password').trim();

@@ -22,9 +22,11 @@ describe('Registration page', function () {
 
     describe('Form submission', function () {
         const username = 'username',
+              email = 'email',
               password = 'password',
               submit = "#register-form .submit",
               usernameError = "#username-error",
+              emailError = '#email-error',
               passwordError = "#password-error";
 
         beforeEach(function (done) {
@@ -32,6 +34,7 @@ describe('Registration page', function () {
         });
 
         it('should fail if username is empty', function (done) {
+            browser.fill('username', '');
             browser.pressButton(submit, function (err) {
                 expect(browser.text(usernameError)).to.equal('This field is required.');
                 done();
@@ -56,7 +59,33 @@ describe('Registration page', function () {
             });
         });
 
+        it('should fail if email is empty', function (done) {
+            browser.fill(email, '');
+            browser.pressButton(submit, function (err) {
+                expect(browser.text(emailError)).to.equal('This field is required.');
+                done();
+            });
+        });
+
+        it('should fail if email is invalid', function (done) {
+            browser.fill('email', 'invalid_email_address');
+            browser.pressButton(submit, function (err) {
+                expect(browser.text(emailError)).to.equal('Please enter a valid email address.');
+                done();
+            });
+        });
+
+        it('should fail if email is longer than 100 characters', function (done) {
+            browser.fill('email', 'x'.repeat(87) + "@localhost.com");
+            browser.pressButton(submit, function (err) {
+                expect(browser.text(emailError))
+                    .to.equal('Please enter no more than 100 characters.');
+                done();
+            });
+        });
+
         it('should fail if password is empty', function (done) {
+            browser.fill('password', '');
             browser.pressButton(submit, function (err) {
                 expect(browser.text(passwordError)).to.equal('This field is required.');
                 done();
